@@ -1,6 +1,6 @@
 import streamlit as st
 import numpy as np
-from scipy.stats import norm
+from scipy.stats import norm 
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -10,6 +10,7 @@ from streamlit_extras.stylable_container import stylable_container
 
 
 st.set_page_config(layout="wide")
+                   
 
 #set up the title
 st.title("Black-Scholes pricing equation modelling")
