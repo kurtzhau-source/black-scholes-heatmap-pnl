@@ -74,6 +74,8 @@ with st.sidebar:
 
     st.write("Created by [Alexander Page](%s)" % url)
 
+    calculate = st.button("Calculate")
+
     
     strike_price = round(st.number_input("Strike Price", min_value=0.00, value=42.00, step=0.01),2)
     
@@ -128,50 +130,51 @@ put_base_pnl = round(bs_put_price - put_price,2)
 #############################################################################################
 
 
+
+
+if calculate: 
 #Displaying the price and predicted pnl given our current values
-
-
 #create in columns 
-call_con, put_con = st.columns(2)
+    call_con, put_con = st.columns(2)
 
 
-with call_con:
-    st.write("This is the predicted price of the call option.")
-    with st.container(border = False):
-        #here we are just using some css to style the box to our desire 
-        st.markdown(f"""
-<div style = "{css_stylers()}">
-       £{bs_call_price}
-</div>
-""", unsafe_allow_html=True)
-    st.write("This is the predicted PnL of the call option given its actual price.")
-    with st.container(border=False):
-        st.markdown(f"""
-<div style = "{color_cells(call_base_pnl)}; {css_stylers()}">
-       £{call_base_pnl}
-</div>
-""", unsafe_allow_html=True)
+    with call_con:
+        st.write("This is the predicted price of the call option.")
+        with st.container(border = False):
+            #here we are just using some css to style the box to our desire 
+            st.markdown(f"""
+            <div style = "{css_stylers()}">
+           £{bs_call_price}
+            </div>
+            """, unsafe_allow_html=True)
+        st.write("This is the predicted PnL of the call option given its actual price.")
+        with st.container(border=False):
+            st.markdown(f"""
+            <div style = "{color_cells(call_base_pnl)}; {css_stylers()}">
+            £{call_base_pnl}
+            </div>
+            """, unsafe_allow_html=True)
 
 
 
 
-with put_con:
-    st.write("This is the predicted price of the put option.")
-    with st.container(border=False):
-        st.markdown(f"""
-<div style = "{css_stylers()}" >
-       £{bs_put_price}
-</div>
-""", unsafe_allow_html=True)
+    with put_con:
+        st.write("This is the predicted price of the put option.")
+        with st.container(border=False):
+            st.markdown(f"""
+            <div style = "{css_stylers()}" >
+            £{bs_put_price}
+            </div>
+            """, unsafe_allow_html=True)
 
-    st.write("This is the predicted PnL of the put option given its actual price.")
-    #here we use our css stylers function and the color cells function to give the conditional background
-    with st.container(border=False):
-        st.markdown(f"""
-<div style = "{color_cells(put_base_pnl)}; {css_stylers()}">
-       £{put_base_pnl}
-</div>
-""", unsafe_allow_html=True)
+            st.write("This is the predicted PnL of the put option given its actual price.")
+            #here we use our css stylers function and the color cells function to give the conditional background
+            with st.container(border=False):
+                st.markdown(f"""
+                <div style = "{color_cells(put_base_pnl)}; {css_stylers()}">
+                £{put_base_pnl}
+                </div>
+                """, unsafe_allow_html=True)
 
 
 
@@ -181,94 +184,92 @@ with put_con:
 
 #building the heatmap
 #give some space for the heatmaps to breath
-st.markdown("---")
+    st.markdown("---")
 
-st.header("Heatmaps of predicted PnL")
+    st.header("Heatmaps of predicted PnL")
 
-with st.container():
-    st.write("Below are seen two heatmaps modelling the predicted Profit and Loss of buying an option given its purchase price. " \
-    "We are changing the two most sensitive variables in the Black-Scholes equation; the spot price and stock volatility." \
-    " Additionally the top value in each square is the predicted PnL while the lower value is the predicted price of the option")
+    with st.container():
+        st.write("Below are the two PnL heatmaps, in each square the upper value represents the predicted PnL while the lower is the predicted price of the option. ")
 
 
 #building the infastrucutre for the heatmap
 
-vol_spread = partition(lower_vol, upper_vol, num)
-spot_spread = partition(lower_spot, upper_spot, num)
+    vol_spread = partition(lower_vol, upper_vol, num)
+    spot_spread = partition(lower_spot, upper_spot, num)
 
 #set as array's so we can use them for indexing 
-vol_array = np.array(vol_spread)
-spot_array = np.array(spot_spread)
+    vol_array = np.array(vol_spread)
+    spot_array = np.array(spot_spread)
 ########################################################################################
 
 #create matrix to store heatmap call values in 
-matrix_call = [[round(black_scholes_call(spot_spread[i], strike_price, interest, vol_spread[j],time),2)  for i in range(num)] for j in range(num)]
+    matrix_call = [[round(black_scholes_call(spot_spread[i], strike_price, interest, vol_spread[j],time),2)  for i in range(num)] for j in range(num)]
 
 #then create a dataframe for matrix for display purposes
-df_call = pd.DataFrame(matrix_call)
+    df_call = pd.DataFrame(matrix_call)
 #use the labelling matrix
-df_call = index_label(df_call)
+    df_call = index_label(df_call)
 
 #create a matrix to store the pnl's to use as a basis for our styling
-matrix_call_pnl = [[round(matrix_call[i][j] - call_price,2) for j in range(num)] for i in range(num)]
+    matrix_call_pnl = [[round(matrix_call[i][j] - call_price,2) for j in range(num)] for i in range(num)]
 
 #create dataframe
-df_call_pnl = pd.DataFrame(matrix_call_pnl)
-df_call_pnl = index_label(df_call_pnl)
+    df_call_pnl = pd.DataFrame(matrix_call_pnl)
+    df_call_pnl = index_label(df_call_pnl)
 
 
 #create matrix to store heatmap put values in
-matrix_put = [[round(black_scholes_put(spot_spread[i], strike_price, interest, vol_spread[j], time),2) for i in range(num)] for j in range(num)]
+    matrix_put = [[round(black_scholes_put(spot_spread[i], strike_price, interest, vol_spread[j], time),2) for i in range(num)] for j in range(num)]
 #then create a dataframe for matrix for display purposes
-df_put =pd.DataFrame(matrix_put)
-df_put = index_label(df_put)
+    df_put =pd.DataFrame(matrix_put)
+    df_put = index_label(df_put)
 
 #create matrix to store predicted pnl for the put values 
-matrix_put_pnl = [[round(matrix_put[i][j] - put_price,2) for j in range(num)] for i in range(num)]
+    matrix_put_pnl = [[round(matrix_put[i][j] - put_price,2) for j in range(num)] for i in range(num)]
 #respective data frame 
-df_put_pnl = pd.DataFrame(matrix_put_pnl)
-df_put_pnl = index_label(df_put_pnl)
+    df_put_pnl = pd.DataFrame(matrix_put_pnl)
+    df_put_pnl = index_label(df_put_pnl)
 
 
 #################################################
 #Construct the heatmaps
 
 #set up subplots to draw heatmap on
-fig1, ax = plt.subplots()
+    fig1, ax = plt.subplots()
 
 
 #first annotate with the predicted call price  
-sns.heatmap(df_call_pnl, annot=df_call, annot_kws={'va':'top', "color" : "black"}, fmt="", cbar=False)
+    sns.heatmap(df_call_pnl, annot=df_call, annot_kws={'va':'top', "color" : "black"}, fmt="", cbar=False)
 #next draw the heatmap and annotate with the predicted pnl 
-sns.heatmap(df_call_pnl, annot=True, center = 0, cmap = LinearSegmentedColormap.from_list('rg',["r", "w", "g"], N=256),annot_kws={'va':'bottom', "color" : "black"},fmt="", cbar=True )
+    sns.heatmap(df_call_pnl, annot=True, center = 0, cmap = LinearSegmentedColormap.from_list('rg',["r", "w", "g"], N=256),annot_kws={'va':'bottom', "color" : "black"},fmt="", cbar=True )
 
-plt.title('Heatmap of predicted PnL of a Call option (£)', fontsize = 15) 
-plt.xlabel('Volatility', fontsize = 10) 
-plt.ylabel('Spot Price', fontsize = 10) 
+    plt.title('Heatmap of predicted PnL of a Call option (£)', fontsize = 15) 
+    plt.xlabel('Volatility', fontsize = 10) 
+    plt.ylabel('Spot Price', fontsize = 10) 
 
 #set up subplots to draw heatmap on
-fig2, ax = plt.subplots()
+    fig2, ax = plt.subplots()
 
 
 
 #first annotate with the predicted put price 
-sns.heatmap(df_put_pnl, annot=df_put, annot_kws={'va':'top', "color" : "black"}, fmt="", cbar=False)
+    sns.heatmap(df_put_pnl, annot=df_put, annot_kws={'va':'top', "color" : "black"}, fmt="", cbar=False)
 #next draw the heatmap and annotate with the predicted pnl
-sns.heatmap(df_put_pnl, annot=True, center = 0, cmap = LinearSegmentedColormap.from_list('rg',["r", "w", "g"], N=256),annot_kws={'va':'bottom', "color" : "black"},fmt="", cbar=True )
+    sns.heatmap(df_put_pnl, annot=True, center = 0, cmap = LinearSegmentedColormap.from_list('rg',["r", "w", "g"], N=256),annot_kws={'va':'bottom', "color" : "black"},fmt="", cbar=True )
 
-plt.title("Heatmap of predicted Pnl of a put option (£)", fontsize = 15) 
-plt.xlabel('Volatility', fontsize = 10) 
-plt.ylabel('Spot Price', fontsize = 10) 
+    plt.title("Heatmap of predicted Pnl of a put option (£)", fontsize = 15) 
+    plt.xlabel('Volatility', fontsize = 10) 
+    plt.ylabel('Spot Price', fontsize = 10) 
 
 
 ######
 #create columns to display the heatmaps in repsective and display
-col_call_map, col_put_map = st.columns(2)
+    col_call_map, col_put_map = st.columns(2)
 
-with col_call_map:
-    st.pyplot(fig1)
+    with col_call_map:
+        st.pyplot(fig1)
 
-with col_put_map:
-    st.pyplot(fig2)
+    with col_put_map:
+        st.pyplot(fig2)
 
 
