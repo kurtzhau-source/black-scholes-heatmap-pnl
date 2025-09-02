@@ -13,7 +13,15 @@ st.set_page_config(layout="wide")
                    
 
 #set up the title
-st.title("Black-Scholes pricing equation modelling")
+st.title("Modelling the Black-Scholes pricing equation for European stock options with a Profit & Loss heatmap for visulisation")
+
+st.write("---")
+
+calculate = st.button("Calculate")
+
+st.write("---")
+
+
 
 
 
@@ -74,7 +82,7 @@ with st.sidebar:
 
     st.write("Created by [Alexander Page](%s)" % url)
 
-    calculate = st.button("Calculate")
+   
 
     
     strike_price = round(st.number_input("Strike Price", min_value=0.00, value=42.00, step=0.01),2)
@@ -261,7 +269,7 @@ if calculate:
 #next draw the heatmap and annotate with the predicted pnl
         sns.heatmap(df_put_pnl, annot=True, center = 0, cmap = LinearSegmentedColormap.from_list('rg',["r", "w", "g"], N=256),annot_kws={'va':'bottom', "color" : "black"},fmt="", cbar=True )
 
-        plt.title("Heatmap of predicted Pnl of a put option (£)", fontsize = 15) 
+        plt.title("Heatmap of predicted Pnl of a Put option (£)", fontsize = 15) 
         plt.xlabel('Volatility', fontsize = 10) 
         plt.ylabel('Spot Price', fontsize = 10) 
 
@@ -310,3 +318,6 @@ if calculate:
 
         with col_put_map:
             st.pyplot(fig2)
+        
+    
+    st.write("Note; we are changing the spot price and volatility as the Black Scholes equation is most sensitive to these variables.")
