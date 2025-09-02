@@ -17,7 +17,7 @@ st.title("Modelling the Black-Scholes pricing equation for European stock option
 
 st.write("---")
 
-col_button, col_dimension, col_annot = st.column(3)
+col_button, col_dimension, col_annot = st.columns(3)
 
 with col_button:
     calculate = st.button("Calculate")
