@@ -11,8 +11,6 @@ from streamlit_extras.stylable_container import stylable_container
 
 st.set_page_config(layout="wide")
 
-st.write("GAY")
-
 #set up the title
 st.title("Modelling the Black-Scholes pricing equation for European stock options with a Profit & Loss heatmap for visualisation")
 
