@@ -13,7 +13,7 @@ st.set_page_config(layout="wide")
                    
 
 #set up the title
-st.title("Modelling the Black-Scholes pricing equation for European stock options with a Profit & Loss heatmap for visulisation")
+st.title("Modelling the Black-Scholes pricing equation for European stock options with a Profit & Loss heatmap for visualisation")
 
 st.write("---")
 
@@ -85,9 +85,9 @@ with st.sidebar:
    
 
     
-    strike_price = round(st.number_input("Strike Price", min_value=0.00, value=42.00, step=0.01),2)
+    strike_price = round(st.number_input("Strike Price", min_value=0.01, value=42.00, step=0.01),2)
     
-    initial_price = round(st.number_input("Initial Price", min_value=0.00, value=40.00, step=0.01),2)
+    initial_price = round(st.number_input("Initial Price", min_value=0.01, value=40.00, step=0.01),2)
     
     
     interest = round(st.number_input("Risk free interest", min_value=0.01, max_value=1.00, value=0.05, step=0.01),2)
