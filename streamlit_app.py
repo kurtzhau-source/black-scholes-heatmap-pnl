@@ -17,14 +17,14 @@ st.title("Modelling the Black-Scholes pricing equation for European stock option
 
 st.write("---")
 
-col_button, col_dimension, col_annot = st.columns(3)
+col_button, left_pad,  col_dimension, right_pad, col_annot, col_outer_pad = st.columns([1,0.25,1,0.5,1,5])
 
 with col_button:
     calculate = st.button("Calculate")
 
 with col_dimension:
   with st.container():
-          num = int(st.number_input("Dimension of PnL heatmap", min_value=2, value=6, step=1))
+            num = int(st.number_input("Dimension of PnL heatmap", min_value=2, value=6, step=1))
 
 with col_annot:
     annot = st.radio("Do you want annotations?",
