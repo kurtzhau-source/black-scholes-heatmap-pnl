@@ -17,7 +17,9 @@ st.title("Modelling the Black-Scholes pricing equation for European stock option
 
 st.write("---")
 
+
 calculate = st.button("Calculate")
+
 
 st.write("---")
 
@@ -77,28 +79,37 @@ url = "https://www.linkedin.com/in/alexander-lingstadt-page-84064132b/"
 
 
 
+
+ 
+    
+
+
+    
+    
+
+
 #Collect our variables for the normal case on the sidebar
 with st.sidebar: 
 
-    st.write("Created by [Alexander Page](%s)" % url)
+    with st.container(border=True):
+        st.header("Created by [Alexander Page](%s)" % url)
 
    
 
     
     strike_price = round(st.number_input("Strike Price", min_value=0.01, value=42.00, step=0.01),2)
-    
-    initial_price = round(st.number_input("Initial Price", min_value=0.01, value=40.00, step=0.01),2)
+    initial_price = round(st.number_input("Initial Price", min_value=0.01, value=40.00 , step=0.01),2)
     
     
     interest = round(st.number_input("Risk free interest", min_value=0.01, max_value=1.00, value=0.05, step=0.01),2)
     
-    volatility = round(st.number_input("Stock volatility", min_value=0.01, value=0.4, max_value=1.00, step=0.01),2)
+    volatility = round(st.number_input("Stock volatility", min_value=0.01, value=0.40, max_value=1.00, step=0.01),2)
 
-    time = round(st.number_input("Time to maturity (years)", min_value=0.01, value=0.5, step=0.01),2) 
+    time = round(st.number_input("Time to maturity (years)", min_value=0.01, value=0.50, step=0.01),2) 
     
-    call_price = round(st.number_input("Please enter the current call price offered", min_value=0.00, value=4.50, step=0.01),2)
+    call_price = round(st.number_input("Call Price", min_value=0.00, value=4.50, step=0.01),2)
 
-    put_price = round(st.number_input("Please enter the current put price offered", min_value=0.00, value=4.50, step=0.01),2)
+    put_price = round(st.number_input("Put Price", min_value=0.00, value=4.50, step=0.01),2)
                                               
 
 
@@ -107,27 +118,26 @@ with st.sidebar:
 
     st.markdown("---")
 
-    st.header("Heat map parameters")
+    with st.container(border=True):
+        st.header("Heat map parameters")
 
     #here we chose these variables to be changeable as the black scholes equation is most sensitive to these two inputs 
 
-    lower_vol = round(st.slider("Lower bound for stock volatility", min_value=0.01, value=0.01, max_value=0.99, step=0.01),2)
+    lower_vol = round(st.slider("Stock Volatility Lower Bound", min_value=0.01, value=0.01, max_value=0.99, step=0.01),2)
 
     
-    upper_vol = round(st.slider("Upper bound for stock volatility", min_value=lower_vol, value=0.80, max_value=1.00, step=0.01),2)
+    upper_vol = round(st.slider("Stock Volatility Upper Bound", min_value=lower_vol, value=0.80, max_value=1.00, step=0.01),2)
     
-    lower_spot = round(st.number_input("Please enter the lower bound of the spot price", min_value=0.00, value=35.00, step=0.01),2)
+    lower_spot = round(st.number_input("Spot Price Lower Bound", min_value=0.00, value=35.00, step=0.01),2)
 
-    upper_spot = round(st.number_input("Please enter the upper bound of the spot price", min_value=lower_spot +0.01, value = lower_spot*1.5, step=0.01),2)
-
-
-
-
-
-    num = int(st.number_input("Please enter the dimension for the nxn profit and loss heat map", min_value=2, value=6, step=1))
-
+    upper_spot = round(st.number_input("Spot Price Upper Bound", min_value=lower_spot +0.01, value = 52.50, step=0.01),2)
+    
+    
     annot = st.radio("Do you want annotations?",
-             ["Yes", "No"], captions=["", "Recommended for higher dimensions"])
+                 ["Yes", "No"], captions=["", "Recommended for higher dimensions and spot values"])
+    
+    num = int(st.number_input("Dimension of PnL heatmap", min_value=2, value=6, step=1))
+
 
 
 #start outputting the computed variables 
@@ -142,6 +152,11 @@ put_base_pnl = round(bs_put_price - put_price,2)
 
 
 
+
+
+##############################################################################################
+
+#run through all calculations and display for the given instance 
 if calculate: 
 #Displaying the price and predicted pnl given our current values
 #create in columns 
@@ -195,11 +210,12 @@ if calculate:
 #building the heatmap
 #give some space for the heatmaps to breath
     st.markdown("---")
-
+    
+    
     st.header("Heatmaps of predicted PnL")
 
     with st.container():
-        st.write("Below are the two PnL heatmaps, in each square the upper value represents the predicted PnL while the lower is the predicted price of the option. ")
+        st.write("In each square the upper value represents the predicted PnL while the lower is the predicted price of the option. ")
 
 
 #building the infastrucutre for the heatmap
@@ -319,5 +335,5 @@ if calculate:
         with col_put_map:
             st.pyplot(fig2)
         
-    
-    st.write("Note; we are changing the spot price and volatility as the Black Scholes equation is most sensitive to these variables.")
+ 
+
