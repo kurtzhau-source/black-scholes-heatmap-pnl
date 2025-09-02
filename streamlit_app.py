@@ -17,8 +17,21 @@ st.title("Modelling the Black-Scholes pricing equation for European stock option
 
 st.write("---")
 
+col_button, col_dimension, col_annot = column(3)
 
-calculate = st.button("Calculate")
+with col_button:
+    calculate = st.button("Calculate")
+
+with col_dimension:
+  with st.container():
+          num = int(st.number_input("Dimension of PnL heatmap", min_value=2, value=6, step=1))
+
+with col_annot:
+    annot = st.radio("Do you want annotations?",
+                 ["Yes", "No"], captions=["", "Recommended for higher dimensions and spot values"])
+    
+
+
 
 
 st.write("---")
@@ -91,8 +104,8 @@ url = "https://www.linkedin.com/in/alexander-lingstadt-page-84064132b/"
 #Collect our variables for the normal case on the sidebar
 with st.sidebar: 
 
-    with st.container(border=True):
-        st.header("Created by [Alexander Page](%s)" % url)
+    
+    st.header("Created by [Alexander Page](%s)" % url)
 
    
 
@@ -117,9 +130,8 @@ with st.sidebar:
 #then create a line to seperate the normal variables from the heatmap interval variables
 
     st.markdown("---")
-
-    with st.container(border=True):
-        st.header("Heat map parameters")
+    
+    st.header("Heat map parameters")
 
     #here we chose these variables to be changeable as the black scholes equation is most sensitive to these two inputs 
 
@@ -133,10 +145,6 @@ with st.sidebar:
     upper_spot = round(st.number_input("Spot Price Upper Bound", min_value=lower_spot +0.01, value = 52.50, step=0.01),2)
     
     
-    annot = st.radio("Do you want annotations?",
-                 ["Yes", "No"], captions=["", "Recommended for higher dimensions and spot values"])
-    
-    num = int(st.number_input("Dimension of PnL heatmap", min_value=2, value=6, step=1))
 
 
 
