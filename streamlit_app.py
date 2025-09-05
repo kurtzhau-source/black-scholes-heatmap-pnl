@@ -12,7 +12,7 @@ from streamlit_extras.stylable_container import stylable_container
 st.set_page_config(layout="wide")
 
 #set up the title
-st.title("Black-Scholes pricing equation with a Profit & Loss heatmap")
+st.title("Profit & Loss heatmap for the Black-Scholes pricing equation")
 
 st.write("---")
 
