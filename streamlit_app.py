@@ -255,3 +255,137 @@ with call_con:
 
 
 #################################################
+#Construct the heatmaps
+    
+    if annot == "Yes":
+     
+#set up subplots to draw heatmap on
+        fig1, ax = plt.subplots()
+
+
+#first annotate with the predicted call price  
+        sns.heatmap(df_call_pnl, annot=df_call, annot_kws={'va':'top', "color" : "black"}, fmt="", cbar=False)
+#next draw the heatmap and annotate with the predicted pnl 
+        sns.heatmap(df_call_pnl, annot=True, center = 0, cmap = LinearSegmentedColormap.from_list('rg',["r", "w", "g"], N=256),annot_kws={'va':'bottom', "color" : "black"},fmt="", cbar=True )
+
+        plt.title('Heatmap of predicted PnL of a Call option (£)', fontsize = 15) 
+        plt.xlabel('Volatility', fontsize = 10) 
+        plt.ylabel('Spot Price', fontsize = 10) 
+
+#set up subplots to draw heatmap on
+        fig2, ax = plt.subplots()
+
+
+
+#first annotate with the predicted put price 
+        sns.heatmap(df_put_pnl, annot=df_put, annot_kws={'va':'top', "color" : "black"}, fmt="", cbar=False)
+#next draw the heatmap and annotate with the predicted pnl
+        sns.heatmap(df_put_pnl, annot=True, center = 0, cmap = LinearSegmentedColormap.from_list('rg',["r", "w", "g"], N=256),annot_kws={'va':'bottom', "color" : "black"},fmt="", cbar=True )
+
+        plt.title("Heatmap of predicted Pnl of a Put option (£)", fontsize = 15) 
+        plt.xlabel('Volatility', fontsize = 10) 
+        plt.ylabel('Spot Price', fontsize = 10) 
+
+
+######
+#create columns to display the heatmaps in repsective and display
+        col_call_map, col_put_map = st.columns(2)
+
+        with col_call_map:
+            st.pyplot(fig1)
+
+        with col_put_map:
+            st.pyplot(fig2)
+    else:
+        fig1, ax = plt.subplots()
+
+
+
+#next draw the heatmap and annotate with the predicted pnl 
+        sns.heatmap(df_call_pnl, annot=False, center = 0, cmap = LinearSegmentedColormap.from_list('rg',["r", "w", "g"], N=256),annot_kws={'va':'bottom', "color" : "black"},fmt="", cbar=True )
+
+        plt.title('Heatmap of predicted PnL of a Call option (£)', fontsize = 15) 
+        plt.xlabel('Volatility', fontsize = 10) 
+        plt.ylabel('Spot Price', fontsize = 10) 
+
+#set up subplots to draw heatmap on
+        fig2, ax = plt.subplots()
+
+
+
+
+#next draw the heatmap and annotate with the predicted pnl
+        sns.heatmap(df_put_pnl, annot=False, center = 0, cmap = LinearSegmentedColormap.from_list('rg',["r", "w", "g"], N=256),annot_kws={'va':'bottom', "color" : "black"},fmt="", cbar=True )
+
+        plt.title("Heatmap of predicted Pnl of a put option (£)", fontsize = 15) 
+        plt.xlabel('Volatility', fontsize = 10) 
+        plt.ylabel('Spot Price', fontsize = 10) 
+
+
+######
+#create columns to display the heatmaps in repsective and display
+        col_call_map, col_put_map = st.columns(2)
+
+        with col_call_map:
+            st.pyplot(fig1)
+
+        with col_put_map:
+            st.pyplot(fig2)
+
+#################################################
+
+#create the call surface plot 
+
+sur_call = go.Figure(
+    go.Surface(
+        z=df_put_pnl.values
+    )
+)
+
+sur_call.update_layout(
+    scene=dict(
+        xaxis_title="Volatility",
+        yaxis_title="Spot Price",
+        zaxis_title="PnL"
+    )
+)
+
+
+########################################################################
+
+sur_put = go.Figure(
+    go.Surface(
+        z=df_put_pnl.values
+    )
+)
+
+sur_put.update_layout(
+    scene=dict(
+        xaxis_title="Volatility",
+        yaxis_title="Spot Price",
+        zaxis_title="PNL"
+    )
+)
+
+
+
+
+    
+
+########################################################################
+
+#display the surfaces
+with put_con: 
+    st.markdown("---")
+
+    sur_call_col, sur_put_col = st.container(2)
+
+    with sur_call_col:
+        st.plotly_chart(sur_call) 
+    
+    with sur_put_col:
+        st.plotly_chart(sur_put)
+
+
+        
+
