@@ -255,82 +255,66 @@ with call_con:
 
 
 #################################################
-#Construct the heatmaps
-    
-    if annot == "Yes":
-     
-#set up subplots to draw heatmap on
-        fig1, ax = plt.subplots()
+
+# Create the 3D Put surface
+put_surface = go.Figure(
+    go.Surface(
+        z=df_put_pnl.values,
+        x=stock_prices,
+        y=time_to_expiry,
+        colorscale="RdYlGn",
+        colorbar=dict(title="P&L")
+    )
+)
+
+put_surface.update_layout(
+    title="Black-Scholes Put P&L",
+    scene=dict(
+        xaxis_title="Stock Price ($)",
+        yaxis_title="Time to Expiry (Years)",
+        zaxis_title="P&L ($)"
+    ),
+    template="plotly_white",
+    height=600,
+    margin=dict(l=0, r=0, t=50, b=0)
+)
 
 
-#first annotate with the predicted call price  
-        sns.heatmap(df_call_pnl, annot=df_call, annot_kws={'va':'top', "color" : "black"}, fmt="", cbar=False)
-#next draw the heatmap and annotate with the predicted pnl 
-        sns.heatmap(df_call_pnl, annot=True, center = 0, cmap = LinearSegmentedColormap.from_list('rg',["r", "w", "g"], N=256),annot_kws={'va':'bottom', "color" : "black"},fmt="", cbar=True )
+# Create the 3D Call surface
+call_surface = go.Figure(
+    go.Surface(
+        z=df_call_pnl.values,
+        x=stock_prices,
+        y=time_to_expiry,
+        colorscale="RdYlGn",
+        colorbar=dict(title="P&L")
+    )
+)
 
-        plt.title('Heatmap of predicted PnL of a Call option (£)', fontsize = 15) 
-        plt.xlabel('Volatility', fontsize = 10) 
-        plt.ylabel('Spot Price', fontsize = 10) 
-
-#set up subplots to draw heatmap on
-        fig2, ax = plt.subplots()
-
-
-
-#first annotate with the predicted put price 
-        sns.heatmap(df_put_pnl, annot=df_put, annot_kws={'va':'top', "color" : "black"}, fmt="", cbar=False)
-#next draw the heatmap and annotate with the predicted pnl
-        sns.heatmap(df_put_pnl, annot=True, center = 0, cmap = LinearSegmentedColormap.from_list('rg',["r", "w", "g"], N=256),annot_kws={'va':'bottom', "color" : "black"},fmt="", cbar=True )
-
-        plt.title("Heatmap of predicted Pnl of a Put option (£)", fontsize = 15) 
-        plt.xlabel('Volatility', fontsize = 10) 
-        plt.ylabel('Spot Price', fontsize = 10) 
-
-
-######
-#create columns to display the heatmaps in repsective and display
-        col_call_map, col_put_map = st.columns(2)
-
-        with col_call_map:
-            st.pyplot(fig1)
-
-        with col_put_map:
-            st.pyplot(fig2)
-    else:
-        fig1, ax = plt.subplots()
+call_surface.update_layout(
+    title="Black-Scholes Call P&L",
+    scene=dict(
+        xaxis_title="Stock Price ($)",
+        yaxis_title="Time to Expiry (Years)",
+        zaxis_title="P&L ($)"
+    ),
+    template="plotly_white",
+    height=600,
+    margin=dict(l=0, r=0, t=50, b=0)
+)
 
 
+# Display both inside put_con
+with put_con:
+    st.plotly_chart(
+        put_surface,
+        use_container_width=True
+    )
 
-#next draw the heatmap and annotate with the predicted pnl 
-        sns.heatmap(df_call_pnl, annot=False, center = 0, cmap = LinearSegmentedColormap.from_list('rg',["r", "w", "g"], N=256),annot_kws={'va':'bottom', "color" : "black"},fmt="", cbar=True )
-
-        plt.title('Heatmap of predicted PnL of a Call option (£)', fontsize = 15) 
-        plt.xlabel('Volatility', fontsize = 10) 
-        plt.ylabel('Spot Price', fontsize = 10) 
-
-#set up subplots to draw heatmap on
-        fig2, ax = plt.subplots()
-
-
-
-
-#next draw the heatmap and annotate with the predicted pnl
-        sns.heatmap(df_put_pnl, annot=False, center = 0, cmap = LinearSegmentedColormap.from_list('rg',["r", "w", "g"], N=256),annot_kws={'va':'bottom', "color" : "black"},fmt="", cbar=True )
-
-        plt.title("Heatmap of predicted Pnl of a put option (£)", fontsize = 15) 
-        plt.xlabel('Volatility', fontsize = 10) 
-        plt.ylabel('Spot Price', fontsize = 10) 
-
-
-######
-#create columns to display the heatmaps in repsective and display
-        col_call_map, col_put_map = st.columns(2)
-
-        with col_call_map:
-            st.pyplot(fig1)
-
-        with col_put_map:
-            st.pyplot(fig2)
+    st.plotly_chart(
+        call_surface,
+        use_container_width=True
+    )
 
 #################################################
 
