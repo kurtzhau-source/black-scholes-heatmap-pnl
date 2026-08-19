@@ -338,38 +338,46 @@ with call_con:
 
 #################################################
 
+#create the call surface plot 
 
-fig = go.Figure(
-    data=[
-        go.Surface(
-            x=df_call_pnl.columns,
-            y=df_call_pnl.index,
-            z=df_call_pnl.values,
-            customdata=df_call.values,
-            colorscale='RdYlGn',
-            hovertemplate=
-                'Volatility: %{x}<br>' +
-                'Spot Price: %{y}<br>' +
-                'PnL: £%{z:.2f}<br>' +
-                'Call Price: £%{customdata:.2f}' +
-                '<extra></extra>'
-        )
-    ]
+sur_call = go.Figure(go.Surface(
+    x = df_call_pnl[0]
+    y = df_call_pnl[1]
+    z = df_call_pnl[2]
+))
+
+sur_call.update_layout(
 )
 
-fig.update_layout(
-    title='3D Surface of predicted Call PnL',
-    scene=dict(
-        xaxis_title='Volatility',
-        yaxis_title='Spot Price',
-        zaxis_title='PnL (£)'
-    )
+########################################################################
+
+#now create the put surface
+sur_put = go.Figure(go.Surface(
+    x = df_put_pnl[0]
+    y = df_put_pnl[1]
+    z = df_put_pnl[2]
+))
+
+sur_put.update_layout(
 )
 
-st.plotly_chart(fig, use_container_width=True)
 
 
+    
 
+########################################################################
+
+#display the surfaces
+with put_con: 
+    st.markdown("---")
+
+    sur_call_col, sur_put_col = st.container(2)
+
+    with sur_call_col:
+        st.plotly_chart(sur_call.show()) 
+    
+    with sur_put_col:
+        st.plotly_chart(sur_put.show())
 
 
         
