@@ -336,27 +336,38 @@ with call_con:
 
 #create the call surface plot 
 
-sur_call = go.Figure(go.Surface(
-    x = df_call_pnl[0],
-    y = df_call_pnl[1],
-    z = df_call_pnl[2]
-))
+sur_call = go.Figure(
+    go.Surface(
+        z=df_put_pnl.values
+    )
+)
 
 sur_call.update_layout(
+    scene=dict(
+        xaxis_title="X",
+        yaxis_title="Y",
+        zaxis_title="P&L"
+    )
 )
 
+sur_put.show()
 ########################################################################
 
-#now create the put surface
-sur_put = go.Figure(go.Surface(
-    x = df_put_pnl[0],
-    y = df_put_pnl[1],
-    z = df_put_pnl[2]
-))
-
-sur_put.update_layout(
+sur_put = go.Figure(
+    go.Surface(
+        z=df_put_pnl.values
+    )
 )
 
+sur_put.update_layout(
+    scene=dict(
+        xaxis_title="X",
+        yaxis_title="Y",
+        zaxis_title="P&L"
+    )
+)
+
+sur_put.show()
 
 
     
