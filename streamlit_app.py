@@ -346,9 +346,8 @@ with put_con:
     ax = fig.add_subplot(1, 1, 1, projection="3d")
 
     x, y = np.meshgrid(
-        np.arange(-2, 2.1, 1),
-        np.arange(-1, 1.1, 0.25)
-    )
+        matrix_put_pnl)
+    
     z = x + y
 
     ax.plot_surface(x, y, z, cmap=cm.copper)
