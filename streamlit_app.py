@@ -344,6 +344,14 @@ pnl_colorscale = [
 ]
 
 
+# Use the same symmetric colour range around zero
+# so that zero is always exactly white
+max_abs_pnl = max(
+    abs(df_call_pnl.values).max(),
+    abs(df_put_pnl.values).max()
+)
+
+
 # Create the call surface plot
 sur_call = go.Figure(
     go.Surface(
@@ -351,8 +359,9 @@ sur_call = go.Figure(
         y=vol_array,
         z=df_call_pnl.values,
         colorscale=pnl_colorscale,
-        cmin=df_call_pnl.values.min(),
-        cmax=df_call_pnl.values.max()
+        cmin=-max_abs_pnl,
+        cmax=max_abs_pnl,
+        cmid=0
     )
 )
 
@@ -372,8 +381,9 @@ sur_put = go.Figure(
         y=vol_array,
         z=df_put_pnl.values,
         colorscale=pnl_colorscale,
-        cmin=df_put_pnl.values.min(),
-        cmax=df_put_pnl.values.max()
+        cmin=-max_abs_pnl,
+        cmax=max_abs_pnl,
+        cmid=0
     )
 )
 
@@ -396,4 +406,4 @@ with sur_call_col:
     st.plotly_chart(sur_call, width="stretch")
 
 with sur_put_col:
-    st.plotly_chart(sur_put, width="stretch")
+    st.plotly_chart(sur_put, width="stretch")idth="stretch")
