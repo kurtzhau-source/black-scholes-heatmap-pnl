@@ -370,12 +370,12 @@ with put_con:
     sur_call_col, sur_put_col = st.container(2)
 
     with sur_call_col:
-        st.plotly_chart(sur_call.show()) 
+        st.plotly_chart(sur_call) 
     
     with sur_put_col:
-        st.plotly_chart(sur_put.show())
+        st.plotly_chart(sur_put)
 
 
         
  
-
+st.write(df_call_pnl[0])
