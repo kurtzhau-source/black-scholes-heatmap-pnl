@@ -215,6 +215,7 @@ with put_con:
 
 
 #building the heatmap
+with call_con:
 #give some space for the heatmaps to breath
     st.markdown("---")
     
