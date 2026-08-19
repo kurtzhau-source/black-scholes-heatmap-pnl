@@ -154,15 +154,7 @@ bs_put_price = round(black_scholes_put(initial_price, strike_price, interest, vo
 call_base_pnl = round(bs_call_price - call_price,2)
 put_base_pnl = round(bs_put_price - put_price,2) 
 
-#############################################################################################
-
-
-
-
-
-
-##############################################################################################
-
+############################################################################################
 #run through all calculations and display for the given instance 
 
 #Displaying the price and predicted pnl given our current values
@@ -212,6 +204,7 @@ with put_con:
 
     
 
+##############################################################################################
 
 
 #building the heatmap
