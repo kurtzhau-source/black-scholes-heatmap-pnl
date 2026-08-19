@@ -86,7 +86,7 @@ def index_label(matrix):
     matrix.columns = vol_array
     return matrix
 
-#get ready for some self plugging
+
 url = "https://www.linkedin.com/in/alexander-lingstadt-page-84064132b/"
 
 
@@ -164,7 +164,7 @@ put_base_pnl = round(bs_put_price - put_price,2)
 ##############################################################################################
 
 #run through all calculations and display for the given instance 
-if calculate: 
+
 #Displaying the price and predicted pnl given our current values
 #create in columns 
     call_con, put_con = st.columns(2)
