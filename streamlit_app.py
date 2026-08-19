@@ -333,32 +333,26 @@ with call_con:
             st.pyplot(fig2)
 
 #################################################
+# PnL colour scale:
+# Loss  -> Red
+# Zero  -> White
+# Profit -> Green
+pnl_colorscale = [
+    [0.0, "red"],
+    [0.5, "white"],
+    [1.0, "green"]
+]
 
-#create the call surface plot 
-
-sur_call = go.Figure(
-    go.Surface(
-        z=df_put_pnl.values
-    )
-)
-
-sur_call.update_layout(
-    scene=dict(
-        xaxis_title="Volatility",
-        yaxis_title="Spot Price",
-        zaxis_title="PnL"
-    )
-)
-
-
-########################################################################
 
 # Create the call surface plot
 sur_call = go.Figure(
     go.Surface(
         x=spot_array,
         y=vol_array,
-        z=df_call_pnl.values
+        z=df_call_pnl.values,
+        colorscale=pnl_colorscale,
+        cmin=df_call_pnl.values.min(),
+        cmax=df_call_pnl.values.max()
     )
 )
 
@@ -376,7 +370,10 @@ sur_put = go.Figure(
     go.Surface(
         x=spot_array,
         y=vol_array,
-        z=df_put_pnl.values
+        z=df_put_pnl.values,
+        colorscale=pnl_colorscale,
+        cmin=df_put_pnl.values.min(),
+        cmax=df_put_pnl.values.max()
     )
 )
 
@@ -400,7 +397,3 @@ with sur_call_col:
 
 with sur_put_col:
     st.plotly_chart(sur_put, width="stretch")
-
-
-        
-
