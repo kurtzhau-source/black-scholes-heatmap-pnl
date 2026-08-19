@@ -167,46 +167,46 @@ put_base_pnl = round(bs_put_price - put_price,2)
 
 #Displaying the price and predicted pnl given our current values
 #create in columns 
-    call_con, put_con = st.columns(2)
+call_con, put_con = st.columns(2)
 
 
-    with call_con:
-        st.write("This is the predicted price of the call option.")
-        with st.container(border = False):
-            #here we are just using some css to style the box to our desire 
-            st.markdown(f"""
-            <div style = "{css_stylers()}">
-           £{bs_call_price}
-            </div>
-            """, unsafe_allow_html=True)
-        st.write("This is the predicted PnL of the call option given its actual price.")
+with call_con:
+    st.write("This is the predicted price of the call option.")
+    with st.container(border = False):
+        #here we are just using some css to style the box to our desire 
+        st.markdown(f"""
+        <div style = "{css_stylers()}">
+        £{bs_call_price}
+        </div>
+        """, unsafe_allow_html=True)
+    st.write("This is the predicted PnL of the call option given its actual price.")
+    with st.container(border=False):
+        st.markdown(f"""
+        <div style = "{color_cells(call_base_pnl)}; {css_stylers()}">
+        £{call_base_pnl}
+        </div>
+        """, unsafe_allow_html=True)
+
+
+
+
+with put_con:
+    st.write("This is the predicted price of the put option.")
+    with st.container(border=False):
+        st.markdown(f"""
+        <div style = "{css_stylers()}" >
+        £{bs_put_price}
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.write("This is the predicted PnL of the put option given its actual price.")
+        #here we use our css stylers function and the color cells function to give the conditional background
         with st.container(border=False):
             st.markdown(f"""
-            <div style = "{color_cells(call_base_pnl)}; {css_stylers()}">
-            £{call_base_pnl}
+            <div style = "{color_cells(put_base_pnl)}; {css_stylers()}">
+            £{put_base_pnl}
             </div>
             """, unsafe_allow_html=True)
-
-
-
-
-    with put_con:
-        st.write("This is the predicted price of the put option.")
-        with st.container(border=False):
-            st.markdown(f"""
-            <div style = "{css_stylers()}" >
-            £{bs_put_price}
-            </div>
-            """, unsafe_allow_html=True)
-
-            st.write("This is the predicted PnL of the put option given its actual price.")
-            #here we use our css stylers function and the color cells function to give the conditional background
-            with st.container(border=False):
-                st.markdown(f"""
-                <div style = "{color_cells(put_base_pnl)}; {css_stylers()}">
-                £{put_base_pnl}
-                </div>
-                """, unsafe_allow_html=True)
 
 
 
