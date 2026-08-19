@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from  matplotlib.colors import LinearSegmentedColormap
 from streamlit_extras.stylable_container import stylable_container
 from matplotlib import cm
-
+import plotly.graph_objects as go
 
 st.set_page_config(layout="wide")
 
@@ -339,29 +339,38 @@ with call_con:
 #################################################
 
 
-put_con = st.container()
+fig = go.Figure(
+    data=[
+        go.Surface(
+            x=df_call_pnl.columns,
+            y=df_call_pnl.index,
+            z=df_call_pnl.values,
+            customdata=df_call.values,
+            colorscale='RdYlGn',
+            hovertemplate=
+                'Volatility: %{x}<br>' +
+                'Spot Price: %{y}<br>' +
+                'PnL: £%{z:.2f}<br>' +
+                'Call Price: £%{customdata:.2f}' +
+                '<extra></extra>'
+        )
+    ]
+)
 
-with put_con:
-    fig = plt.figure(num=1, clear=True)
-    ax = fig.add_subplot(1, 1, 1, projection="3d")
-
-    x, y = np.meshgrid(
-        matrix_put_pnl)
-    
-    z = x + y
-
-    ax.plot_surface(x, y, z, cmap=cm.copper)
-    ax.set(
-        xlabel="x",
-        ylabel="y",
-        zlabel="z",
-        title="z = x + y"
+fig.update_layout(
+    title='3D Surface of predicted Call PnL',
+    scene=dict(
+        xaxis_title='Volatility',
+        yaxis_title='Spot Price',
+        zaxis_title='PnL (£)'
     )
+)
 
-    fig.tight_layout()
+st.plotly_chart(fig, use_container_width=True)
 
-    st.pyplot(fig)
-    plt.close(fig)
+
+
+
 
         
  
