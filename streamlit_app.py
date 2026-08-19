@@ -406,4 +406,4 @@ with sur_call_col:
     st.plotly_chart(sur_call, width="stretch")
 
 with sur_put_col:
-    st.plotly_chart(sur_put, width="stretch")idth="stretch")
+    st.plotly_chart(sur_put, width="stretch")
