@@ -16,7 +16,7 @@ st.title("Profit & Loss heatmap for the Black-Scholes pricing equation")
 
 st.write("---")
 
-col_dimension. col_annot = container(2)
+col_dimension, col_annot = st.columns(2)
 with col_dimension:
   with st.container():
             num = int(st.number_input("Dimension of PnL heatmap", min_value=2, value=6, step=1))
