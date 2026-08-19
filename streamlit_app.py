@@ -16,11 +16,6 @@ st.title("Profit & Loss heatmap for the Black-Scholes pricing equation")
 
 st.write("---")
 
-col_button, left_pad,  col_dimension, right_pad, col_annot, col_outer_pad = st.columns([10,2,10,5,15,50])
-
-with col_button:
-    calculate = st.button("Calculate")
-
 with col_dimension:
   with st.container():
             num = int(st.number_input("Dimension of PnL heatmap", min_value=2, value=6, step=1))
@@ -341,8 +336,8 @@ with call_con:
 #create the call surface plot 
 
 sur_call = go.Figure(go.Surface(
-    x = df_call_pnl[0]
-    y = df_call_pnl[1]
+    x = df_call_pnl[0],
+    y = df_call_pnl[1],
     z = df_call_pnl[2]
 ))
 
@@ -353,8 +348,8 @@ sur_call.update_layout(
 
 #now create the put surface
 sur_put = go.Figure(go.Surface(
-    x = df_put_pnl[0]
-    y = df_put_pnl[1]
+    x = df_put_pnl[0],
+    y = df_put_pnl[1],
     z = df_put_pnl[2]
 ))
 
