@@ -332,59 +332,7 @@ with call_con:
         with col_put_map:
             st.pyplot(fig2)
 
-#################################################
 
-#create the call surface plot 
-
-sur_call = go.Figure(
-    go.Surface(
-        z=df_put_pnl.values
-    )
-)
-
-sur_call.update_layout(
-    scene=dict(
-        xaxis_title="Volatility",
-        yaxis_title="Spot Price",
-        zaxis_title="PnL"
-    )
-)
-
-
-########################################################################
-
-sur_put = go.Figure(
-    go.Surface(
-        z=df_put_pnl.values
-    )
-)
-
-sur_put.update_layout(
-    scene=dict(
-        xaxis_title="Volatility",
-        yaxis_title="Spot Price",
-        zaxis_title="PNL"
-    )
-)
-
-
-
-
-    
-
-########################################################################
-
-#display the surfaces
-with put_con: 
-    st.markdown("---")
-
-    sur_call_col, sur_put_col = st.container(2)
-
-    with sur_call_col:
-        st.plotly_chart(sur_call) 
-    
-    with sur_put_col:
-        st.plotly_chart(sur_put)
 
 
         
