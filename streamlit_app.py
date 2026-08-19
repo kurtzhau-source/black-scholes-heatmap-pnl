@@ -366,7 +366,7 @@ sur_call = go.Figure(
 )
 
 sur_call.update_layout(
-    title ="Call PnL"
+    title = "Call PnL",
     scene=dict(
     
         xaxis_title="Spot Price",
@@ -390,7 +390,7 @@ sur_put = go.Figure(
 )
 
 sur_put.update_layout(
-    title = "Put PnL"
+    title = "Put PnL",
     scene=dict(
     
         xaxis_title="Spot Price",
