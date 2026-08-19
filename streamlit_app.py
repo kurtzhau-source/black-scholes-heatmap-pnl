@@ -340,16 +340,16 @@ with call_con:
 
 
 with put_con: 
-fig = plt.figure(num=1, clear=True)
-ax = fig.add_subplot(1, 1, 1, projection='3d')
+ fig = plt.figure(num=1, clear=True)
+ ax = fig.add_subplot(1, 1, 1, projection='3d')
 
-(x, y) = np.meshgrid(np.arange(-2, 2.1, 1), np.arange(-1, 1.1, .25))
-z = x + y
+ (x, y) = np.meshgrid(np.arange(-2, 2.1, 1), np.arange(-1, 1.1, .25))
+ z = x + y
 
-ax.plot_surface(x, y, z, cmap=cm.copper)
-ax.set(xlabel='x', ylabel='y', zlabel='z', title='z = x + y')
+ ax.plot_surface(x, y, z, cmap=cm.copper)
+ ax.set(xlabel='x', ylabel='y', zlabel='z', title='z = x + y')
 
-fig.tight_layout()
+ fig.tight_layout()
 
 
 
